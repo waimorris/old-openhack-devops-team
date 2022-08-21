@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        label node2
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building docker image'
+                dir('apis/userprofile/')
+                sh 'pwd'
+                sh 'docker build -t willido/userprofile:2.0 .'
+            }
+        }
+    }
+}
