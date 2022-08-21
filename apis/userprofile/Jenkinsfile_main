@@ -18,8 +18,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'willido_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
                     // some block
 		    echo 'Dockerhub Login'
-                    sh 'docker login -u $dockerUsr -p $dockerPwd'
-		    sh 'docker push willido/userprofile:1.0'
+                    sh 'sudo docker login -u $dockerUsr -p $dockerPwd'
+		    sh 'sudo docker push willido/userprofile:1.0'
                 }
             }
 	}
