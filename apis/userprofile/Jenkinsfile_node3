@@ -9,7 +9,7 @@ pipeline {
                 echo 'Building docker image'
                 dir('apis/userprofile/') {
                 	sh 'pwd'
-                	sh 'sudo docker build -t willido/userprofile:1.0 .'
+                	sh 'docker build -t willido/userprofile:3.0 .'
 		}
             }
         }
