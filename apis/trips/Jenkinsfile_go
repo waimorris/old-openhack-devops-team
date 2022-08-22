@@ -19,6 +19,12 @@ pipeline {
 		}
             }
         }
+	stage('Canary') {
+	    timeout(time: 10, unit: 'SECONDS') {
+ 	   	// some block
+		input message: 'Can we upload image?', ok: 'Upload'
+	    }	
+	}
 	stage('Upload Docker Image') {
 	    steps {
                 withCredentials([usernamePassword(credentialsId: 'willido_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
@@ -30,4 +36,12 @@ pipeline {
             }
 	}
     }
+
+	post {
+  		always {
+    			// One or more steps need to be included within each condition's block.
+			cleanWs()
+			sh "sudo docker rmi ${ImgName}:${ImgTag}"
+  		}	
+	}
 }
