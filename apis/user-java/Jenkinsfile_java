@@ -26,7 +26,7 @@ pipeline {
         }
 	stage('Upload Docker Image') {
 	    when {
-  		environment name: 'params.blUploadImg', value: 'true'
+  		expression {return params.blUploadImg}
 	    }
 	    steps {
                 withCredentials([usernamePassword(credentialsId: 'willido_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
