@@ -20,7 +20,7 @@ pipeline {
                 echo 'Building docker image'
                 dir(WorkDir) {
                 	sh 'pwd'
-                	sh 'sudo docker build -t $ImgName:$params.ImgTag .'
+                	sh 'sudo docker build -t $ImgName:${params.ImgTag} .'
 		}
             }
         }
