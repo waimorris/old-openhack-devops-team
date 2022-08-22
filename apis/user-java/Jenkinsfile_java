@@ -1,0 +1,41 @@
+pipeline {
+    agent {
+        label 'Node2'
+    }
+
+    parameters {
+  	booleanParam defaultValue: true, description: 'True:  upload image (default); False: will not upload ', name: 'blUploadImg'
+  	string defaultValue: '1.0', name: 'ImgTag', trim: true
+    }
+
+    environment {
+      ImgName = "willido/user-java"
+      //ImgTag = "2.0"
+      WorkDir = "apis/user-java"
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building docker image'
+                dir(WorkDir) {
+                	sh 'pwd'
+                	sh 'sudo docker build -t $ImgName:$params.ImgTag .'
+		}
+            }
+        }
+	stage('Upload Docker Image') {
+	    when {
+  		environment name: 'params.blUploadImg', value: 'true'
+	    }
+	    steps {
+                withCredentials([usernamePassword(credentialsId: 'willido_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
+                    // some block
+		    echo 'Dockerhub Login'
+                    sh 'sudo docker login -u $dockerUsr -p $dockerPwd'
+		    sh "sudo docker push ${ImgName}:${params.ImgTag}"
+                }
+            }
+	}
+    }
+}
