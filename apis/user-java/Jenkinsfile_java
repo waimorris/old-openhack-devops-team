@@ -10,7 +10,7 @@ pipeline {
 
     environment {
       ImgName = "willido/user-java"
-      //ImgTag = "2.0"
+      ImgTag = params.ImgTag
       WorkDir = "apis/user-java"
     }
 
@@ -20,7 +20,7 @@ pipeline {
                 echo 'Building docker image'
                 dir(WorkDir) {
                 	sh 'pwd'
-                	sh 'sudo docker build -t $ImgName:${params.ImgTag} .'
+                	sh 'sudo docker build -t $ImgName:$ImgTag .'
 		}
             }
         }
