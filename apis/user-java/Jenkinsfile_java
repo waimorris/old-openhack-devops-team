@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-      ImgName = "willido/user-java"
+      ImgName = "waiwenglouq/user-java"
       ImgTag = "${params.ImgTag}"
       WorkDir = "apis/user-java"
     }
@@ -29,7 +29,7 @@ pipeline {
   		expression {return params.blUploadImg}
 	    }
 	    steps {
-                withCredentials([usernamePassword(credentialsId: 'willido_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
+                withCredentials([usernamePassword(credentialsId: 'waiwenglouq_dockerhub', passwordVariable: 'dockerPwd', usernameVariable: 'dockerUsr')]) {
                     // some block
 		    echo 'Dockerhub Login'
                     sh 'sudo docker login -u $dockerUsr -p $dockerPwd'
